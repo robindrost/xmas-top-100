@@ -1,0 +1,57 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Installation file for xmas module.
+ */
+
+function fivestar_schema() {
+	$schema['xmas'] = array(
+    // example (partial) specification for table "node"
+    'description' => 'The base table for songs.', 
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The primary identifier for a node.', 
+        'type' => 'serial', 
+        'unsigned' => TRUE, 
+        'not null' => TRUE,
+      ), 
+      'sid' => array(
+        'description' => 'The spotify song identifier.', 
+        'type' => 'varchar', 
+        'length' => 255, 
+        'not null' => TRUE, 
+        'default' => '',
+      ), 
+      'title' => array(
+        'description' => 'The title of this song, always treated as non-markup plain text.', 
+        'type' => 'varchar', 
+        'length' => 255, 
+        'not null' => TRUE, 
+        'default' => '',
+      ),
+	  'title' => array(
+        'description' => 'The artist of this song, always treated as non-markup plain text.', 
+        'type' => 'varchar', 
+        'length' => 255, 
+        'not null' => TRUE, 
+        'default' => '',
+      ),
+    ), 
+    'unique keys' => array(
+      'sid' => array('sid'), 
+    ), 
+    'primary key' => array('nid'),
+  );
+  return $schema;
+
+}
+
+function xmas_install() {
+  drupal_install_schema('xmas');
+}
+
+function xmas_uninstall() {
+  drupal_uninstall_schema('xmas');
+}

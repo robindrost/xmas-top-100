@@ -11,6 +11,20 @@
 function xmas_perm() {
   return array('administer xmas');
 }
+/**
+ * Implements hook_node_info().
+ */
+function xmas_node_info() {
+  return array(
+    'song' => array(
+      'name' => t('Song'),
+      'module' => 'xmas',
+      'description' => t("A song, normally added by the xmas module."),
+	  'has_body' => FALSE,
+    )
+  );
+}
+
 
 /**
  * Implements hook_menu().
@@ -33,5 +47,19 @@ function xmas_menu() {
  * Menu Callback; the xmas admin settings.
  */
 function xmas_admin() {
+  $form = array();
   
+  
+  return $form;
 }
+
+
+/**
+ * Form Callback; The validation of the admin settings form.
+ */
+function xmas_admin_validate() {}
+ 
+/**
+ * Form Callback; The submit hook of the admin settings form.
+ */
+ function xmas_admin_submit() {}
