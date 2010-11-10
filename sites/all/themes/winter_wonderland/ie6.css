@@ -1,0 +1,150 @@
+/* $Id: ie6.css,v 1.4 2009/11/25 17:30:37 divisivecottonwood Exp $ */ 
+
+#container {
+background : none;
+}
+sub {
+vertical-align : sub;
+font-size : 1.1em;
+}
+sup {
+vertical-align : super;
+font-size : 1.1em;
+}
+#content {
+background : #DEFAEE;
+}
+#sidebar-left {
+background : url("images/background-pattern-one.png") repeat-y;
+}
+#sidebar-left .block {
+background : none;
+}
+.front #content .node-title a:visited {color:#ffffff;
+background : #3F4F4F;
+}  
+.front #content .node-title a:focus {color:#ffffff;
+background : #3F4F4F;
+} 
+.front #content .node-title a:hover {color:#ffffff;
+background : #3F4F4F;
+}  
+.front #content .node-title a:active {color:#ffffff;
+background : #3F4F4F;
+}
+#left-side {
+margin-right : 0;
+} 
+#sidebar-left ul.menu li {
+list-style-image: none;
+list-style-type : circle;
+padding-left : 0;
+}
+#footer-one ul.menu li {
+list-style-image: none;
+list-style-type : circle;
+padding-left : 0;
+}
+#footer-two ul.menu li {
+list-style-image: none;
+list-style-type : circle;
+padding-left : 0;
+}
+#footer-one-left {
+width : 466px;
+margin : 0 10px 10px 0;
+float : left;
+background : #DEFAEE;
+padding : 1px;
+padding-bottom: 32767px;
+margin-bottom: -32767px;
+border-top : 1px solid #3F4F4F;
+border-left : 1px solid #3F4F4F;
+border-right : 1px solid #3F4F4F;
+}
+#footer-one-middle {
+display : none;
+}
+#footer-one-right {
+width : 466px;
+margin : 0 0 10px 0;
+float  : left;
+background : #DEFAEE;
+padding : 1px;
+padding-bottom: 32767px;
+margin-bottom: -32767px;
+border-top : 1px solid #3F4F4F;
+border-left : 1px solid #3F4F4F;
+border-right : 1px solid #3F4F4F;
+}
+#footer-one {
+overflow : visible;
+}
+#footer-two {
+overflow : visible;
+margin : 10px;
+}
+#footer-one-left {
+width : 464px;
+padding-bottom: 0;
+margin-bottom: 10px;
+}
+#footer-one-middle {
+display : none;
+}
+#footer-one-right {
+width : 464px;
+padding-bottom: 0;
+margin-bottom: 10px;
+}
+#footer-two-left {
+width : 300px;
+padding-bottom: 0;
+margin-bottom: 10px;
+}
+#footer-two-middle {
+width : 300px;
+padding-bottom: 0;
+margin-bottom: 10px;
+
+}
+#footer-two-right {
+width : 300px;
+padding-bottom: 0;
+margin-bottom: 10px;
+}
+
+
+/* Various body classes */
+
+.no-footer-two-middle #footer-two-left {
+width : 464px;
+}
+.no-footer-two-middle #footer-two-right {
+width : 464px;
+}
+.no-footer-one-right #footer-one-left {
+width : 946px;
+padding-bottom: 0;
+margin-bottom: 0;
+border : 1px solid #3F4F4F;
+}
+.no-footer-one-right #footer-one-middle {
+display : none;
+}
+.no-footer-two-right #footer-two-left {
+width : 464px;
+}
+.no-footer-two-right #footer-two-middle {
+width : 464px;
+margin-right : 0;
+}
+.no-footer-one-left #footer-one-middle {
+display : none;
+}
+.no-footer-one-left #footer-one-right {
+width : 944px;
+padding-bottom: 0;
+margin-bottom: 0;
+border : 1px solid #3F4F4F;
+}

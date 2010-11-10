@@ -1,0 +1,22 @@
+; $Id: winter_wonderland.info,v 1.1 2009/10/10 19:16:31 divisivecottonwood Exp $ 
+name = Winter-Wonderland
+description = A winter Drupal theme
+screenshot = screenshot.jpg
+regions[left] = left sidebar
+regions[content] = content
+regions[footer_top_left] = footer top left
+regions[footer_top_right] = footer top right
+regions[footer_bottom_left] = footer bottom left
+regions[footer_bottom_middle] = footer bottom middle
+regions[footer_bottom_right] = footer bottom right
+stylesheets[all][] = style.css
+
+version = VERSION
+core = 6.x
+engine = phptemplate
+; Information added by drupal.org packaging script on 2010-07-19
+version = "6.x-1.09"
+core = "6.x"
+project = "winter_wonderland"
+datestamp = "1279563017"
+

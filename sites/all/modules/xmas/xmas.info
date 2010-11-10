@@ -1,0 +1,5 @@
+name = XMas
+description = XMas top 100 plugin
+version = 6.x-dev
+core = 6.x
+package = XMas

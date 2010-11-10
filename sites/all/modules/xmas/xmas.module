@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * The xmas top 100 module!
+ */
+
+/**
+ * Implements hook_perm().
+ */
+function xmas_perm() {
+  return array('administer xmas');
+}
+
+/**
+ * Implements hook_menu().
+ */
+function xmas_menu() {
+  $items = array();
+
+  $items['admin/content/xmas'] = array(
+    'title' => 'XMas', 
+    'description' => 'Update the xmas listing and set the xmas settings.', 
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('xmas_admin'),  
+    'access arguments' => array('administer xmas'), 
+  );
+
+  return $items;
+}
+
+/**
+ * Menu Callback; the xmas admin settings.
+ */
+function xmas_admin() {
+  
+}
