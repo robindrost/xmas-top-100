@@ -11,19 +11,6 @@
 function xmas_perm() {
   return array('administer xmas');
 }
-/**
- * Implements hook_node_info().
- */
-function xmas_node_info() {
-  return array(
-    'song' => array(
-      'name' => t('Song'),
-      'module' => 'xmas',
-      'description' => t("A song, normally added by the xmas module."),
-	  'has_body' => FALSE,
-    )
-  );
-}
 
 
 /**
@@ -49,17 +36,128 @@ function xmas_menu() {
 function xmas_admin() {
   $form = array();
   
+  $form['import'] = array(
+	  '#type' => 'textarea',
+	  '#title' => t('Links'),
+	  '#description'=> t('Paste all the urls you want to import in this field (space sepperated).'),
+	  '#required' => TRUE
+	);
+  
+  $form['submit'] = array(
+	  '#type' => 'submit',
+	  '#value' => t('Submit'),
+	);
   
   return $form;
 }
 
 
-/**
- * Form Callback; The validation of the admin settings form.
- */
-function xmas_admin_validate() {}
  
 /**
  * Form Callback; The submit hook of the admin settings form.
  */
- function xmas_admin_submit() {}
+ function xmas_admin_submit($form, &$form_state) {
+  $songs = xmas_queue_songs($form_state['values']['import']);
+  
+  drupal_set_message(t('%count songs qued for import.', array('%count' => $songs)));
+ }
+
+/**
+ * Helper function to save the songs to the queue.
+ */
+function xmas_queue_songs($data) {
+  $base_query = 'INSERT IGNORE INTO {xmas} (url) VALUES';
+  $i = 0;
+  $query = '';
+  $results = 0;
+  $urls = explode(PHP_EOL, $data);
+  
+  
+  if (!count($urls)) {
+    return;
+  }
+  
+  foreach($urls as $url) {
+    ++$i;
+
+    if (drupal_strlen($url) < 1) {
+      continue;
+    }
+    
+    $query .= " ('%s'),";
+    $params[] = $url;
+    
+    if ($i > 100) {
+      db_query($base_query . substr($query, 0, -1), $params);
+      $results += db_affected_rows();
+      $params = array();
+      $query = '';
+      $i = 0;
+    }
+  }
+  
+  if ($i > 0) {
+    db_query($base_query . substr($query, 0, -1), $params);
+    $results += db_affected_rows();
+  }
+  
+  return $results;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function xmas_cron() {
+  $urls = db_query_range('SELECT url FROM {xmas} WHERE status = 0', 0, 5);
+  xmas_fetch_songs($urls);
+}
+ 
+ 
+ 
+/**
+ * Helper function to fetch the song data and create the songs.
+ */
+function xmas_fetch_songs($urls) {
+  while($url = db_fetch_array($urls)) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url['url']);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $html = curl_exec($ch);
+    curl_close($ch);
+
+    $song['id'] = end(explode("/", $url['url']));
+    preg_match_all('#property="og:(title|image)" content="(.*)" />#', $html, $matches);
+    $song['image'] = $matches[2][0];
+    $song['title'] = $matches[2][1];
+    xmas_create_song($song);
+  }
+}
+
+/**
+ * Create the song node.
+ */
+function xmas_create_song($song) {
+  $edit = array();
+  $edit['type'] = 'song';
+  $edit['uid'] = 1;
+  $edit['name'] = 'admin';
+  $edit['promote'] = 0;
+  $edit['comment'] = 0;
+  $edit['revision'] = 0;
+  $edit['format'] = FILTER_FORMAT_DEFAULT;
+  $edit['status'] = 1;
+  $edit['date'] = format_date(time(), 'custom', 'Y-m-d H:i:s O');
+  $edit['title'] = $song['title'];
+
+  node_invoke_nodeapi($edit, 'song new');
+
+  node_validate($edit);
+  if ($errors = form_get_errors()) {
+    var_dump($errors, 'ERROR');
+    return;
+  }
+  db_query("UPDATE {xmas} SET status = 1 WHERE url LIKE '%%%s'", $song['id']);
+  $node = node_submit($edit);
+  node_save($node);
+}

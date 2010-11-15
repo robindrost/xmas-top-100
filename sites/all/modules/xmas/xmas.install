@@ -6,46 +6,29 @@
  * Installation file for xmas module.
  */
 
-function fivestar_schema() {
+function xmas_schema() {
 	$schema['xmas'] = array(
     // example (partial) specification for table "node"
     'description' => 'The base table for songs.', 
     'fields' => array(
-      'nid' => array(
-        'description' => 'The primary identifier for a node.', 
-        'type' => 'serial', 
-        'unsigned' => TRUE, 
-        'not null' => TRUE,
-      ), 
-      'sid' => array(
+      'url' => array(
         'description' => 'The spotify song identifier.', 
         'type' => 'varchar', 
         'length' => 255, 
         'not null' => TRUE, 
         'default' => '',
       ), 
-      'title' => array(
-        'description' => 'The title of this song, always treated as non-markup plain text.', 
-        'type' => 'varchar', 
-        'length' => 255, 
+      'status' => array(
+        'description' => 'The status of this song (1 means added as a node).', 
+        'type' => 'int', 
         'not null' => TRUE, 
-        'default' => '',
-      ),
-	  'title' => array(
-        'description' => 'The artist of this song, always treated as non-markup plain text.', 
-        'type' => 'varchar', 
-        'length' => 255, 
-        'not null' => TRUE, 
-        'default' => '',
-      ),
-    ), 
-    'unique keys' => array(
-      'sid' => array('sid'), 
-    ), 
-    'primary key' => array('nid'),
+        'default' => 0,
+      ), 
+    ),
+    'primary key' => array('sid'),
   );
+  
   return $schema;
-
 }
 
 function xmas_install() {
