@@ -25,7 +25,7 @@ function xmas_schema() {
         'default' => 0,
       ), 
     ),
-    'primary key' => array('sid'),
+    'primary key' => array('url'),
   );
   
   return $schema;
