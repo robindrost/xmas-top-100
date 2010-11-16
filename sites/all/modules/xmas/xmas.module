@@ -130,6 +130,7 @@ function xmas_fetch_songs($urls) {
     preg_match_all('#property="og:(title|image)" content="(.*)" />#', $html, $matches);
     $song['image'] = $matches[2][0];
     $song['title'] = $matches[2][1];
+    $song['url'] = $url['url'];
     xmas_create_song($song);
   }
 }
@@ -149,7 +150,9 @@ function xmas_create_song($song) {
   $edit['status'] = 1;
   $edit['date'] = format_date(time(), 'custom', 'Y-m-d H:i:s O');
   $edit['title'] = $song['title'];
-
+  $edit['field_image'][0]['value'] = $song['image'];
+  $edit['field_url'][0]['value'] = $song['url'];
+  
   node_invoke_nodeapi($edit, 'song new');
 
   node_validate($edit);
@@ -157,7 +160,7 @@ function xmas_create_song($song) {
     var_dump($errors, 'ERROR');
     return;
   }
-  db_query("UPDATE {xmas} SET status = 1 WHERE url LIKE '%%%s'", $song['id']);
+  db_query("UPDATE {xmas} SET status = 1 WHERE url LIKE '%s'", $song['url']);
   $node = node_submit($edit);
   node_save($node);
 }
